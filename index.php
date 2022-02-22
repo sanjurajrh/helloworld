@@ -1,5 +1,6 @@
 <?php
 print "Hello, World! php version is " . PHP_VERSION . "\n";
-print "Hello, World! A Chnage is about to begin... STay tuned" . "\n";
+print "Hello, World! A Change is about to begin... Stay tuned" . "\n";
 print "VT ROCKS!!!" . "\n";
+print "DO288 - Developer Track!";
 ?>
