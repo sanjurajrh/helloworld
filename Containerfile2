@@ -1,2 +1,0 @@
-FROM registry.access.redhat.com/ubi8/ubi
-ENTRYPOINT sleep 60s
