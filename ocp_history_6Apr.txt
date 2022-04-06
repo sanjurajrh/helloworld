@@ -1,0 +1,571 @@
+    1  exit
+    2  sudo yum -yinstall gnome-tweaks 
+    3  sudo yum -y install gnome-tweaks 
+    4  gnome-tweaks
+    5  vim token
+    6  cat token 
+    7  git clone https://github.com/sanjurajrh/DO180-apps.git
+    8  ls
+    9  cd DO180-apps/
+   10  ls
+   11  git checkout -b exercise 
+   12  echo "testing git" > myfile.txt
+   13  git add myfile.txt 
+   14  git commit -m "Added the testing file"
+   15  git push 
+   16  git push --set-upstream origin exercise
+   17  echo "ocp4 test" > ocp.txt 
+   18  git add ocp.txt 
+   19  git commit -m "Another sample file"
+   20  git push 
+   21  cat ~/.gitconfig 
+   22  lab-configure 
+   23  cat /usr/local/etc/ocp4.config
+   24  echo ${RHT_OCP4_DEV_USER}
+   25  source /usr/local/etc/ocp4.config 
+   26  echo ${RHT_OCP4_DEV_USER}
+   27  cat ~/gitconfig
+   28  cat ~/.gitconfig
+   29  # git config --global credential.hepler cache --timeout=604800
+   30  top 
+   31  cd
+   32  rpm -qa httpd
+   33  sudo yum install httpd 
+   34  rpm -qa httpd
+   35  sudo systemctl start httpd
+   36  sudo systemctl enable httpd
+   37  sudo systemctl status httpd
+   38  ls -l /etc/security/limits.conf 
+   39  man ulimit 
+   40  whatis ulimit
+   41  ls -l /etc/security/limits.conf 
+   42  vim /etc/security/limits.conf
+   43  sudo systemctl status httpd
+   44  man -k system 
+   45  man -k systemd
+   46  sudo -i 
+   47  oc login -u cwtmco -p ec34dce1eac14d7b93f8 https://api.ap46a.prod.ole.redhat.com:6443
+   48  oc new-project cwtmco-project1
+   49  oc new-app --docker-image=quay.io/redhattraining/versioned-hello:v1.0 ---name=helloapp
+   50  oc new-app --docker-image=quay.io/redhattraining/versioned-hello:v1.0 --name helloapp
+   51  oc get pods 
+   52  oc get pods -o wide 
+   53  oc get svc 
+   54  oc describe svc helloapp
+   55  oc get deployment
+   56  oc delete pod/helloapp-8477fc8869-qpvwj
+   57  oc get pods -l  deployment=helloapp
+   58  oc get pods -l  deployment=helloapp -o wide 
+   59  oc describe svc helloapp 
+   60  history 
+   61  oc get pods 
+   62  oc get pods - wide 
+   63  oc get pods -o wide 
+   64  # Probe -- Liveness, Readiness, Startup 
+   65  oc debug nodes/ip-10-0-193-166.ap-southeast-1.compute.internal 
+   66  oc get pods 
+   67  oc get svc 
+   68  oc get deployment 
+   69  oc exec -it helloapp-8477fc8869-rg4db -- curl localhost:8080
+   70  oc scale deployment/helloapp --replicas=2
+   71  oc get deployment
+   72  oc get pods 
+   73  oc get pods -o wide 
+   74  oc describe svc helloapp 
+   75  oc get pods 
+   76  oc exec -it helloapp-8477fc8869-hrd2t -- env 
+   77  wget https://k8s.io/examples/admin/dns/dnsutils.yaml
+   78  vim dnsutils.yaml 
+   79  cat dnsutils.yaml 
+   80  oc create -f dnsutils.yaml 
+   81  oc get pods 
+   82  oc get dns 
+   83  oc get pods
+   84  oc exec -it dnsutils /bin/bash
+   85  # flat 
+   86  #  network policies 
+   87  oc get projects
+   88  oc get route -n openshift-console 
+   89  oc get deployment
+   90  oc scale --replicas=1 deployment/helloapp
+   91  oc get deployment
+   92  oc get pods -o wide 
+   93  oc delete -f dnsutils.yaml 
+   94  oc get pods 
+   95  oc get hpa
+   96  oc autoscale 
+   97  oc autoscale -h 
+   98  oc get pods 
+   99  oc get deployment
+  100  oc autoscale deployment/helloapp --min=2 --max=10 --cpu-percent=75 
+  101  oc get hpa
+  102  oc get pods 
+  103  oc get pods -w
+  104  oc get pods 
+  105  oc get deployment
+  106  oc get pods 
+  107  vim mypod.yaml
+  108  cat mypod.yaml
+  109  oc create -f mypod.yaml
+  110  oc get pods 
+  111  oc get pods -w
+  112  oc get pods 
+  113  oc logs mypod 
+  114  oc logs mypod mycontainer1
+  115  oc logs mypod mycontainer2
+  116  oc delete -f mypod.yaml 
+  117  oc get all
+  118  oc delete hpa/helloapp
+  119  oc get all -l app=helloapp
+  120  oc delete all -l app=helloapp
+  121  oc get all 
+  122  oc new-app --docker-image=quay.io/redhattraining/versioned-hello:v1.0 --name helloapp --as-deployment-config=true 
+  123  oc get all
+  124  oc delete all -l app=helloapp
+  125  oc get all
+  126  # special features -- custom strategy -- deploymentconfig 
+  127  # special features -- routing the traffic of the requests -- deploymentconfig 
+  128  oc get all
+  129  oc new-app --name=dockerapp --docker-image=quay.io/redhattraining/versioned-hello:v1.1
+  130  oc get pods 
+  131  oc exec -it dockerapp-5c8dc6bc6c-xt786 env | grep -i key1 
+  132  oc exec -it dockerapp-5c8dc6bc6c-xt786 -- env | grep -i key1 
+  133  oc get secret 
+  134  oc create secret generic mysecret --from-literal=KEY1=value1 
+  135  oc get secret 
+  136  oc get secret/mysecret  -o yaml 
+  137  echo "dmFsdWUx" | base64 --decode 
+  138  oc create secret -h 
+  139  # vault 
+  140  oc get secret/mysecret 
+  141  oc get cm 
+  142  oc get configmap
+  143  oc create configmap -h 
+  144  oc create configmap some-config --from-literal=MESSAGE=hello
+  145  oc get cm 
+  146  oc get cm/some-config -o yaml 
+  147  oc get sunil
+  148  oc get is -n openshift | grep jenkis
+  149  oc get is -n openshift | grep jenkins
+  150  oc get is -n openshift | grep tekton
+  151  oc get template -n openshift | grep -i tekton 
+  152  oc get pods -n openshift-monitoring 
+  153  oc get all
+  154  oc get route 
+  155  oc expose svc/dockerapp
+  156  oc get route 
+  157  curl dockerapp-cwtmco-project1.apps.ap46a.prod.ole.redhat.com
+  158  cat /usr/local/etc/ocp4.config 
+  159  oc delete route dockerapp
+  160  oc expose svc/dockerapp --hostname=ibm.apps.ap46a.prod.ole.redhat.com
+  161  oc get route 
+  162  # *.apps.ap46a.prod.ole.redhat.com  -- IN A 
+  163  dig ibm.apps.ap46a.prod.ole.redhat.com
+  164  dig sunil.apps.ap46a.prod.ole.redhat.com
+  165  oc get project
+  166  oc get pods -n cwtmco-project2
+  167  rpm -qa podman 
+  168  yum list podman
+  169  podman version 
+  170  podman search mysql
+  171  ls -l /etc/containers/registries.*
+  172  sudo vim /etc/containers/registries.conf
+  173  grep -v ^# /etc/containers/registries.conf
+  174  podman search quay.io/mysql
+  175  podman images 
+  176  podman ps 
+  177  podman search registry.redhat.io/mysql 
+  178  podman pull registry.redhat.io/rhel8/mysql-80
+  179  podman login registry.redhat.io 
+  180  cat /run/user/1000/containers/auth.json 
+  181  podman pull registry.redhat.io/rhel8/mysql-80
+  182  podman images
+  183  podman pull docker.io/nginx 
+  184  podman images 
+  185  podman pull docker.io/nginx:1.20 
+  186  podman images 
+  187  podman run --name myweb docker.io/library/nginx:1.20 
+  188  podman ps 
+  189  podman ps -a
+  190  podman start myweb 
+  191  podman ps 
+  192  podman stop yweb
+  193  podman stop myweb
+  194  podman rm myweb
+  195  podman ps -a
+  196  podman images 
+  197  podman rmi docker.io/library/nginx:1.20 
+  198  podman images 
+  199  podman run --name myweb -p 8080:80 -d docker.io/nginx 
+  200  podman ps 
+  201  curl localhost:8080
+  202  podman images
+  203  podman run registry.redhat.io/rhel8/mysql-80
+  204  podman ps 
+  205  podman ps -a
+  206  podman rm sad_wu
+  207  # podman run --name mysql-pod -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80
+  208  podman images 
+  209  podman inspect 18ec09a1f061
+  210  podman run --name mysql-pod -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80
+  211  podman ps 
+  212  podman images 
+  213  podman inspect 12766a6745ee
+  214  podman inspect 12766a6745ee | grep -i usage 
+  215  skopeo inspect docker://docker.io/nginx
+  216  history 
+  217  skopeo inspect docker://registry.redhat.io/rhel8/mysql-80
+  218  podman ps 
+  219  podman exec -it mysql-pod /bin/bash
+  220  man podman-ps
+  221  history > history.txt
+  222  mv history.txt ocp_history.txt
+  223  sudo yum list git 
+  224  git clone https://github.com/sanjurajrh/helloworld.git
+  225  cd helloworld/
+  226  ls
+  227  cp ../ocp_history.txt .
+  228  git add ocp_history.txt 
+  229  git commit -m "history file"
+  230  git push 
+  231  rm -f ocp_history.txt 
+  232  git status
+  233  git rm ocp_history.txt 
+  234  git commit -m "Removed the file"
+  235  git push 
+  236  exit
+  237  podman ps 
+  238  podman exec -it myweb /bin/bash
+  239  podman stop myweb
+  240  exit
+  241  podman images
+  242  podman ps -a 
+  243  podman rm myweb mysql-pod
+  244  podman images
+  245  podman ps -a 
+  246  podman images 
+  247  podman run docker.io/library/nginx
+  248  podman ps 
+  249  podman ps -a 
+  250  podman run docker.io/library/nginx ls /tmp/
+  251  podman ps -a 
+  252  podman search registry.redhat.io/httpd
+  253  podman run registry.redhat.io/rhel8/httpd-24 ls /tmp/
+  254  podman login registry.redhat.io 
+  255  podman run registry.redhat.io/rhel8/httpd-24 ls /tmp/
+  256  podman ps -a
+  257  podman logs unruffled_dirac
+  258  podman images
+  259  podman run --name myweb -d registry.redhat.io/rhel8/httpd-24 
+  260  podman ps 
+  261  podman logs myweb 
+  262  podman exec myweb cat /etc/hostname 
+  263  podman exec -l cat /etc/hostname
+  264  podman  --help 
+  265  podman  --help | grep exec 
+  266  podman exec -l cat /etc/hostname
+  267  podman exec -l ls /tmp/
+  268  podman exec -it -l /bin/bash 
+  269  podman ps 
+  270  kill -l 
+  271  podman kill -s SIGTERM myweb
+  272  podman ps 
+  273  podman ps -a 
+  274  podman rm unruffled_dirac festive_babbage xenodochial_joliot
+  275  podman ps -a
+  276  podman start myweb 
+  277  podman  ps 
+  278  lab manage-lifecycle start 
+  279  podman run --name mysql-pod -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80
+  280  podman exec -it mysql-pod /bin/bash 
+  281  podman exec mysql-pod /bin/bash -c 'mysql -uroot'
+  282  podman exec mysql-pod -- /bin/bash -c 'mysql -uroot'
+  283  podman exec -it mysql-pod /bin/bash -c 'mysql -uroot'
+  284  cat /home/student/DO180/labs/manage-lifecycle/db.sql 
+  285  podman ps 
+  286  podman stop myweb 
+  287  podman rm myweb 
+  288  podman run --name myweb -p 8080:80 -d registry.redhat.io/rhel8/httpd-24 
+  289  podman ps 
+  290  curl localhost:8080
+  291  podman stop myweb 
+  292  podman rm myweb 
+  293  podman run --name myweb -p 8080:8080 -d registry.redhat.io/rhel8/httpd-24 
+  294  podman ps 
+  295  curl localhost:8080
+  296  podman  exec -it myweb bash
+  297  curl localhost:8080
+  298  podman diff myweb
+  299  # A -- added the file 
+  300  # C -- Change (Timestamp, modified) 
+  301  # D -- delete the file 
+  302  podman ps -a 
+  303  podman stop myweb mysql-pod my
+  304  podman stop myweb mysql-pod
+  305  podman rm myweb mysql-pod
+  306  mkdir -p /home/student/dbfiles 
+  307  ls -ld /home/student/dbfiles
+  308  chown -R 27:27 /home/student/dbfiles
+  309  podman help | grep unshare 
+  310  podman unshare chown -R 27:27 /home/student/dbfiles
+  311  ls -ld /home/student/dbfiles
+  312  podman unshare ls -ld /home/student/dbfiles
+  313  sudo semanage fcontext -l | grep container 
+  314  # container_file_t
+  315  man semanage-fcontext 
+  316  # semanage fcontext -a -t httpd_sys_content_t "/web(/.*)?"
+  317         # restorecon -R -v /web
+  318  ls -ldZ /home/student/dbfiles/
+  319  sudo semanage fcontext -a -t container_file_t "/home/student/dbfiles(/.*)?"
+  320  ls -ldZ /home/student/dbfiles/
+  321  sudo restorecon -R -v /home/student/dbfiles/
+  322  ls -ldZ /home/student/dbfiles/
+  323  mkdir /home/student/testdir
+  324  sudo chcon -R -t container_file_t /home/student/testdir
+  325  ls -ldZ /home/student/testdir
+  326  sudo ls -l /home/student/dbfiles/
+  327  podman run --name mysql-persist -v /home/student/dbfiles:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80 
+  328  podman ps 
+  329  sudo ls -l /home/student/dbfiles/
+  330  podman images
+  331  podman inspect registry.redhat.io/rhel8/mysql-80 | grep -i user 
+  332  podman help | grep -i share 
+  333  # rootless containers 
+  334  # containers which are executed as unprivileged
+  335  # containers which are executed as unprivileged user 
+  336  # USER 1001 
+  337  # least privilged 
+  338  podman ps 
+  339  podman stop mysql-persist 
+  340  podman rm mysql-persist 
+  341  podman run --name mysql-persist -p 13306:3306 -v /home/student/dbfiles:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80 
+  342  podman ps 
+  343  podman port mysql-persist 
+  344  mysql -uuser1 -pmypa55 -h127.0.0.1 -P13306 testdb
+  345  mysql -uuser1 -pmypa55 -h127.0.0.1 -P13306 testdb < /home/student/DO180/labs/manage-lifecycle/db.sql 
+  346  podman exec -it mysql-persist /bin/bash
+  347  skopeo copy --help 
+  348  echo ${XDG_RUNTIME_DIR}
+  349  cat /run/user/1000/containers/auth.json 
+  350  podman logout registry.redhat.io
+  351  cat /run/user/1000/containers/auth.json 
+  352  grep -v ^# /etc/containers/registries.conf
+  353  podman search nginx 
+  354  podman search docker.io/nginx 
+  355  podman search --help 
+  356  podman search docker.io/nginx --list-tags
+  357  podman search httpd --limit 5 
+  358  podman search httpd --filter stars=10 
+  359  podman search --help 
+  360  podman search  --filter=is-official docker.io/nginx 
+  361  podman search httpd
+  362  podman search quay.io/redhattraining/httpd-parent --list-tags
+  363  curl -Ls https://quay.io/v2/redhattraining/httpd-parent/tags/list 
+  364  # curl -Ls -u username:password https://quay.io/v2/redhattraining/httpd-parent/tags/list 
+  365  podman images 
+  366  podman ps -a 
+  367  podman stop mysql-persist 
+  368  podman rm mysql-persist
+  369  podman rmi -a 
+  370  podman images 
+  371  podman pull quay.io/redhattraining/httpd-parent:2.4 
+  372  podman images 
+  373  podman pull quay.io/redhattraining/httpd-parent
+  374  podman images 
+  375  podman tag 4346d3cace25 quay.io/sanjuraj_rh/httpd-parent:v1.0 
+  376  podman images 
+  377  podman login quay.io
+  378  podman push quay.io/sanjuraj_rh/httpd-parent:v1.0 
+  379  podman search httpd-parent:v1.0
+  380  podman search quay.io/sanjuraj_rh/
+  381  podman search --help 
+  382  podman search --filter=is-official docker.io/mysql 
+  383  podman search --filter=is-official registry.access.redhat.com/mysql
+  384  podman search --filter=is-official registry.redhat.io/mysql
+  385  podman search --filter=is-official registry.redhat.io/httpd
+  386  podman search --filter=is-official docker.io/httpd
+  387  podman ps -a 
+  388  podman images 
+  389  podman inspect quay.io/redhattraining/httpd-parent:latest 
+  390  podman images 
+  391  podman rmi -a 
+  392  podman images 
+  393  podman rmi quay.io/redhattraining/httpd-parent:latest 
+  394  podman images 
+  395  podman rmi --help 
+  396  podman images 
+  397  podman pull docker.io/nginx 
+  398  podman images
+  399  podman save --help 
+  400  podman save -o nginx.tar docker.io/library/nginx 
+  401  ls 
+  402  tar tf nginx.tar 
+  403  podman images
+  404  podman rmi 12766a6745ee
+  405  podman images
+  406  ls
+  407  podman load -i nginx.tar 
+  408  podman images 
+  409  podman rmi 12766a6745ee
+  410  mv nginx.tar /tmp/
+  411  ls /tmp/
+  412  ls
+  413  podman load -i /tmp/nginx.tar 
+  414  ls -al 
+  415  podman load --help
+  416  podman save --help
+  417  podma images
+  418  podman images
+  419  podman save -o images.tar 12766a6745ee 4346d3cace25
+  420  tar tf images.tar 
+  421  podman images  
+  422  podman rmi -a 
+  423  podman images 
+  424  podman load -i images.tar 
+  425  podman images 
+  426  podman tag 12766a6745ee docker.io/library/nginx
+  427  podman images 
+  428  podman rmi -a 
+  429  podman pull quay.io/sanjuraj_rh/httpd-parent:v1.0 
+  430  podman images
+  431  # podman run --name web -p 8080:80 -d quay.io/sanjuraj_rh/httpd-parent:v1.0 
+  432  podman inspect quay.io/sanjuraj_rh/httpd-parent | grep -i 80 
+  433  podman inspect quay.io/sanjuraj_rh/httpd-parent:v1.0  | grep -i 80 
+  434  podman run --name web -p 8080:80 -d quay.io/sanjuraj_rh/httpd-parent:v1.0 
+  435  podman ps 
+  436  podman port web 
+  437  curl localhost:8080
+  438  podman exec -it web bash 
+  439  curl localhost:8080
+  440  podman images 
+  441  podman commit --help 
+  442  podman commit web quay.io/sanjuraj_rh/httpd-parent:v1.1 
+  443  podman images 
+  444  podman push quay.io/sanjuraj_rh/httpd-parent:v1.1 
+  445  podman run --name testweb -p 8081:80 -d quay.io/sanjuraj_rh/httpd-parent:v1.1
+  446  curl localhost:8081
+  447  podman run --name testweb1 -p 8082:80 -d quay.io/sanjuraj_rh/httpd-parent:v1.0
+  448  curl localhost:8082
+  449  # registry_server/accountname/imagename:tag 
+  450  podman images 
+  451  podman tag 48eb28dda2ed sunil
+  452  podman images 
+  453  podman run --name testweb2 -p 8083:80 -d localhost/sunil
+  454  podman ps 
+  455  podman run --name testweb3 -p 8084:80 -d sunil
+  456  podman ps 
+  457  sudo /var/lib/containers/
+  458  sudo ls /var/lib/containers/
+  459  sudo ls -al /var/lib/containers/
+  460  ls -al .local/
+  461  ls -al .local/share/
+  462  ls -al .local/share/containers/
+  463  ls -al .local/share/containers/storage/
+  464  ls -al .local/share/containers/storage/overlay-containers/
+  465  ls -l /home/student/
+  466  ls -al /home/student/
+  467  ls -al .local/share/containers/storage/overlay-containers/
+  468  ls -ld 
+  469  ls -l /etc/containers/registries.d/
+  470  history 
+  471  # ls
+  472  ls
+  473  mkdir sample-Containerfile
+  474  cd sample-Containerfile/
+  475  ls
+  476  touch Containerfile 
+  477  vim Containerfile 
+  478  podman search ubi8 
+  479  vim Containerfile 
+  480  head Containerfile 
+  481  vim Containerfile1
+  482  cp Containerfile1 Containerfile2
+  483  vim Containerfile2
+  484  cat Containerfile2 
+  485  cat Containerfile1
+  486  podman images 
+  487  podman ps -a 
+  488  podman stop -a 
+  489  podman rm -a 
+  490  podman rmi -a 
+  491  podman images 
+  492  podman rmi localhost/sunil
+  493  podman rmi -a 
+  494  podman images
+  495  podman ps -a 
+  496  cat Containerfile1 
+  497  cat Containerfile2
+  498  podman build -t sleep:v1.0 -f Containerfile2
+  499  podman images 
+  500  podman run localhost/sleep ls /tmp/
+  501  podman run localhost/sleep:v1.0  ls /tmp/
+  502  podman ps -a
+  503  podman build -t entrypoint:v1.0 -f Containerfile1
+  504  podman images 
+  505  cat Containerfile1
+  506  cat Containerfile2
+  507  podman run localhost/entrypoint:v1.0 ls /tmp/
+  508  podman run localhost/sleep:v1.0  ls /tmp/
+  509  vim Containerfile
+  510  cat Containerfile
+  511  podman build -t myweb .
+  512  podman images
+  513  podman ps -a 
+  514  podman rmi 548b658b1465
+  515  vim Containerfile
+  516  podman build --layers=false -t myweb . 
+  517  vim Containerfile
+  518  podman images 
+  519  podman build --layers=false -t myweb . 
+  520  ls
+  521  mkdir files 
+  522  echo "DO180" > files/do180.html
+  523  podman build --layers=false -t myweb . 
+  524  podman images  
+  525  podman run --name lab-web -d -p 10080:80 myweb
+  526  systemctl status httpd 
+  527  podman  stop lab-web 
+  528  podman rm lab-web 
+  529  podman  images  
+  530  podman rmi web 
+  531  podman rmi myweb 
+  532  vim Containerfile
+  533  podman images  
+  534  podman rmi -a 
+  535  podman rm -a 
+  536  podman rmi -a 
+  537  podman images  
+  538  podman ps -a
+  539  podman build  -t finalweb .
+  540  podman images  
+  541  podman run --name lab-web -p 100080:80  -d finalweb
+  542  podman run --name lab-web1 -p 10080:80  -d finalweb
+  543  podman ps 
+  544  podman ps -a 
+  545  podman logs lab-web1 
+  546  vim Containerfile
+  547  podman rm lab-web1
+  548  podman rm lab-web
+  549  podman ps -a 
+  550  podman rmi -a 
+  551  vim Containerfile
+  552  podman build  -t finalweb .
+  553  podman images
+  554  podman run --name lab-web1 -p 10080:80  -d finalweb
+  555  podman ps 
+  556  curl localhost:10080
+  557  curl localhost:10080/do180.html
+  558  podman images  
+  559  podman tag 42d6e02d77ff quay.io/sanjuraj_rh/finalweb:v1.0 
+  560  podman images  
+  561  podman push quay.io/sanjuraj_rh/finalweb:v1.0 
+  562  podman stop lab-web1
+  563  podman rm lab-web1
+  564  podman rmi quay.io/sanjuraj_rh/finalweb:v1.0 
+  565  podman rmi -a 
+  566  podman images  
+  567  podman run --name testweb -p 20080:80 quay.io/sanjuraj_rh/finalweb:v1.0 
+  568  vim Containerfile
+  569  podman images
+  570  history 
+  571  history  > /home/student/ocp_history_6Apr.txt 
