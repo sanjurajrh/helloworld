@@ -1,0 +1,21 @@
+#servicebus_create_topic_policy.yml
+---
+- hosts: localhost
+  vars_files:
+    - vars/env_asb.yml
+  vars:
+    asbtopic: "topicteam1"
+    asbqueue: "queueteam1"
+    asbpolicyrights:
+      - send
+      - listen
+
+  tasks:
+    - name: Test looping
+      ansible.builtin.debug:
+        msg: "{{ asbtopic }}-{{ item.1 }} {{ item.0.namespace }}"
+      loop: "{{ azureservicebus|product(asbpolicyrights)|list }}"
+
+      register: policy
+    - debug:
+        var: policy

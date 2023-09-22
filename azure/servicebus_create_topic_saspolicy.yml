@@ -1,0 +1,24 @@
+#servicebus_create_topic_saspolicy.yml
+---
+- hosts: localhost
+  vars_files:
+    - vars/env_asb.yml
+  vars:
+    asbtopic: "topic_team1"
+    asbqueue: "queue_team1"
+    asbpolicyrights:
+      - send
+      - listen
+
+  tasks:
+    - name: Create a policy with send and listen privilege
+      azure_rm_servicebussaspolicy:
+        name: "{{ asbtopic }}-{{ item.1 }}"
+        topic: "{{ asbtopic }}"
+        namespace: "{{ item.0.namespace }}"
+        resource_group: "{{  item.0.resourcegroup }}"
+        rights: "{{ item }}"
+      loop: "{{ azureservicebus | zip(asbpolicyrights)|list }}"
+      register: policy
+    - debug:
+        var: policy

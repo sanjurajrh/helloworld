@@ -1,0 +1,13 @@
+azureservicebus:
+  - namespace: MWAnsibleHackathonASB
+    subscription: MFC-Global-Asia-RGNLOFC-ETSDB-POT-S1
+    resourcegroup: AsiaMIddlewareServices
+    location: southeastasia
+  - namespace: asiae2emonasb
+    subscription: MFC-Global-Asia-RGNLOFC-ETSDB-POT-S1
+    resourcegroup: AsiaE2EMonitoring
+    location: southeastasia
+  - namespace: AnsibleHackathonASB
+    subscription: MFC-Global-Asia-RGNLOFC-ETSDB-POT-S1
+    resourcegroup: AsiaE2EMonitoring
+    location: southeastasia
